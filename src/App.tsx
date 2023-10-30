@@ -4,8 +4,18 @@ import './globals.css';
 import SignInForm from './auth/forms/SignInForm';
 import SignUpForm from './auth/forms/SignUpForm';
 import AuthLayout from './auth/AuthLayout';
-import RootLayout from './pages/root/RootLayout';
-import { Home } from './pages';
+import RootLayout from './root/RootLayout';
+import {
+	AllUsers,
+	CreatePost,
+	EditPost,
+	Explore,
+	Home,
+	PostDetails,
+	Profile,
+	Saved,
+	UpdateProfile,
+} from './root/pages';
 
 const App = () => {
 	return (
@@ -20,6 +30,14 @@ const App = () => {
 				{/* private routes */}
 				<Route element={<RootLayout />}>
 					<Route index element={<Home />} />
+					<Route index element={<Explore />} />
+					<Route index element={<Saved />} />
+					<Route index element={<AllUsers />} />
+					<Route index element={<CreatePost />} />
+					<Route index element={<EditPost />} />
+					<Route index element={<PostDetails />} />
+					<Route index element={<Profile />} />
+					<Route index element={<UpdateProfile />} />
 				</Route>
 			</Routes>
 

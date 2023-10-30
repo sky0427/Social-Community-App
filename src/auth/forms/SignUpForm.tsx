@@ -17,9 +17,9 @@ const SignUpForm = () => {
 	const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
 	// Queries
-	const { mutateAsync: createUserAccount, isLoading: isCreatingAccount } = useCreateUserAccount();
+	const { mutateAsync: createUserAccount, isPending: isCreatingAccount } = useCreateUserAccount();
 
-	const { mutateAsync: signInAccount, isLoading: isSigningInUser } = useSignInAccount();
+	const { mutateAsync: signInAccount, isPending: isSigningInUser } = useSignInAccount();
 
 	// 1. Define form.
 	const form = useForm<z.infer<typeof SignupValidation>>({
@@ -33,9 +33,10 @@ const SignUpForm = () => {
 	});
 
 	// 2. Define a submit handler.
-	async function onSubmit(user: z.infer<typeof SignupValidation>) {
+	const handleSignup = async (user: z.infer<typeof SignupValidation>) => {
 		try {
 			const newUser = await createUserAccount(user);
+
 			if (!newUser) {
 				toast({ title: 'Sign up failed. Please try again.' });
 				return;
@@ -63,7 +64,7 @@ const SignUpForm = () => {
 		} catch (error) {
 			console.log(error);
 		}
-	}
+	};
 
 	return (
 		<Form {...form}>
@@ -72,7 +73,7 @@ const SignUpForm = () => {
 				<h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Create a new account</h2>
 				<p className="text-light-3 small-medium md:base-regular mt-2">To use Snapgram, please enter your details</p>
 
-				<form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full mt-4">
+				<form onSubmit={form.handleSubmit(handleSignup)} className="flex flex-col gap-5 w-full mt-4">
 					<FormField
 						control={form.control}
 						name="name"
@@ -86,6 +87,7 @@ const SignUpForm = () => {
 							</FormItem>
 						)}
 					/>
+
 					<FormField
 						control={form.control}
 						name="username"
@@ -99,6 +101,7 @@ const SignUpForm = () => {
 							</FormItem>
 						)}
 					/>
+
 					<FormField
 						control={form.control}
 						name="email"
@@ -112,6 +115,7 @@ const SignUpForm = () => {
 							</FormItem>
 						)}
 					/>
+
 					<FormField
 						control={form.control}
 						name="password"
@@ -125,8 +129,9 @@ const SignUpForm = () => {
 							</FormItem>
 						)}
 					/>
+
 					<Button type="submit" className="shad-button_primary">
-						{isCreatingAccount ? (
+						{isCreatingAccount || isSigningInUser || isUserLoading ? (
 							<div className="flex-center gap-2">
 								<Loader /> Loading...
 							</div>
