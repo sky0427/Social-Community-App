@@ -58,6 +58,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 				return true;
 			}
+			return false;
 		} catch (error) {
 			console.log(error);
 			return false;
@@ -71,6 +72,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		if (cookieFallback === '[]' || cookieFallback === null || cookieFallback === undefined) {
 			navigate('/sign-in');
 		}
+		checkAuthUser();
 	}, []);
 
 	const value = {
