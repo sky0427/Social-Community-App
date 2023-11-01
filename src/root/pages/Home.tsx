@@ -23,7 +23,7 @@ const Home = () => {
 
 	return (
 		<div className="flex flex-1">
-			<div className="home-container">
+			<div className="home-container scrollbar-hide">
 				<div className="home-posts">
 					<h2 className="h3-bold md:h2-bold text-left w-full">Home Feed</h2>
 					{isPostLoading && !posts ? (
@@ -45,7 +45,7 @@ const Home = () => {
 				{isUserLoading && !creators ? (
 					<Loader />
 				) : (
-					<ul>
+					<ul className="grid xl:grid-cols-2 gap-6">
 						{creators?.documents.map((creators) => (
 							<li key={creators?.$id}>
 								<UserCard user={creators} />
